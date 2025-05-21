@@ -4,7 +4,7 @@
     <div class="container py-5">
         <div class="text-center mb-4">
             <h2 class="fw-bold text-primary">Welcome, {{ auth()->user()->name }}</h2>
-            <p class="text-muted fs-5">Here’s your delivery dashboard with real-time order updates.</p>
+            <p class="text-muted fs-5">Here’s your delivery dashboard </p>
         </div>
 
         <div class="card shadow-sm border-0">
