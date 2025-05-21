@@ -3,9 +3,29 @@
 @section('title', 'Customer Registration')
 
 @section('content')
-<div class="container d-flex justify-content-center align-items-center" style="min-height: 75vh;">
-    <div class="card shadow-lg p-4" style="width: 100%; max-width: 450px; border-radius: 15px;">
-        <h2 class="text-center mb-4 fw-bold" style="color: #d32f2f;">Customer Registration</h2>
+<style>
+    body {
+        background: linear-gradient(to right, #fceabb, #f8b500);
+    }
+    .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    .form-control:focus {
+        border-color: #ff9800;
+        box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.25);
+    }
+    .form-label {
+        font-weight: 600;
+    }
+</style>
+
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="card shadow-lg p-4 bg-white" style="width: 100%; max-width: 500px; border-radius: 15px;">
+        <h2 class="text-center mb-4 fw-bold text-danger">Customer Registration</h2>
 
         {{-- Show validation errors --}}
         @if ($errors->any())
@@ -29,79 +49,86 @@
             @csrf
 
             <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
                 <input
                     type="text"
                     class="form-control form-control-lg rounded-pill"
                     id="name"
                     name="name"
                     value="{{ old('name') }}"
-                    placeholder="Your Name"
+                    placeholder=""
                     required
                     autofocus
                 >
             </div>
 
             <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
                 <input
                     type="email"
                     class="form-control form-control-lg rounded-pill"
                     id="email"
                     name="email"
                     value="{{ old('email') }}"
-                    placeholder="Your Email"
+                    placeholder=""
                     required
                 >
             </div>
 
             <div class="mb-3">
+                <label for="address" class="form-label">Home Address</label>
                 <input
                     type="text"
                     class="form-control form-control-lg rounded-pill"
                     id="address"
                     name="address"
                     value="{{ old('address') }}"
-                    placeholder="Your Address"
+                    placeholder=""
                     required
                 >
             </div>
 
             <div class="mb-3">
+                <label for="contact_number" class="form-label">Contact Number</label>
                 <input
                     type="text"
                     class="form-control form-control-lg rounded-pill"
                     id="contact_number"
                     name="contact_number"
                     value="{{ old('contact_number') }}"
-                    placeholder="Your Contact Number"
+                    placeholder=""
                     required
                 >
             </div>
 
             <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
                 <input
                     type="password"
                     class="form-control form-control-lg rounded-pill"
                     id="password"
                     name="password"
-                    placeholder="Your Password"
+                    placeholder=""
                     required
                 >
             </div>
 
             <div class="mb-4">
+                <label for="password_confirmation" class="form-label">Confirm Password</label>
                 <input
                     type="password"
                     class="form-control form-control-lg rounded-pill"
                     id="password_confirmation"
                     name="password_confirmation"
-                    placeholder="Confirm Password"
+                    placeholder=""
                     required
                 >
             </div>
 
-            {{-- Role only for Admins --}}
+            {{-- Role dropdown only visible to admins --}}
             @if(auth()->check() && auth()->user()->role == 'admin')
                 <div class="mb-4">
+                    <label for="role" class="form-label">User Role</label>
                     <select name="role" id="role" class="form-select form-select-lg rounded-pill" required>
                         <option value="admin">Admin</option>
                         <option value="vendor">Vendor</option>

@@ -73,12 +73,11 @@
                     @if(auth()->user()->role === 'customer')
                         <li class="nav-item d-flex align-items-center">
                             <span class="navbar-text fw-semibold fs-5 text-primary">
-                                Hi, {{ auth()->user()->name }}
                             </span>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('customer.dashboard') }}">
-                                Dashboard
+                                Orders
                             </a>
                         </li>
 

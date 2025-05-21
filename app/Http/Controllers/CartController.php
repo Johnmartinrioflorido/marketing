@@ -11,11 +11,12 @@ class CartController extends Controller
 {
     public function index()
     {
-        $cartItems = CartItem::with('product')
-            ->where('user_id', Auth::id())
-            ->get();
+$cartItems = CartItem::with('product')
+    ->whereHas('product')
+    ->where('user_id', Auth::id())
+    ->get();
 
-        $totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
+$totalPrice = $cartItems->sum(fn($item) => $item->product->price * $item->quantity);
 
         return view('customer.cart.index', compact('cartItems', 'totalPrice'));
     }
