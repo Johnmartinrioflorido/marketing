@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="mb-4">
+    <a href="javascript:history.back()" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
+</div>
     <div class="container">
         <h2>Welcome, {{ auth()->user()->name }}</h2>
 

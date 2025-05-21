@@ -18,33 +18,71 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
+            color: #333;
         }
+
         .navbar {
             background-color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
             padding: 1rem 0;
         }
+
         .navbar-brand {
-            font-weight: 600;
+            font-weight: 700;
             color: #ff2e63 !important;
+            font-size: 1.5rem;
         }
+
         .nav-link {
             font-weight: 500;
-            color: #333 !important;
-            transition: color 0.3s ease;
+            color: #555 !important;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0.75rem;
         }
+
         .nav-link:hover {
             color: #ff2e63 !important;
+            background-color: rgba(255, 46, 99, 0.1);
+            border-radius: 0.375rem;
         }
+
         .btn-link.nav-link {
             color: #dc3545 !important;
         }
+
         .container {
             max-width: 960px;
         }
+
         .navbar-text {
-            white-space: nowrap;
             margin-left: 1rem;
+        }
+
+        /* Cart Button Styling */
+        .btn-warning {
+            color: #212529;
+            background-color: #ffc107;
+            border: none;
+            font-size: 1.1rem;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+
+        .badge.bg-danger {
+            font-size: 0.75rem;
+            padding: 0.35em 0.6em;
+        }
+
+        form button.nav-link {
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        form button.nav-link:hover {
+            color: #a71d2a !important;
+            text-decoration: underline;
         }
 
         @media (max-width: 576px) {
@@ -55,13 +93,13 @@
         }
     </style>
 
-     @stack('styles')
+    @stack('styles')
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            Public Market
+            Marketing
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>

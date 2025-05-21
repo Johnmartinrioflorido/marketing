@@ -6,13 +6,14 @@
 <style>
     .card {
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        border-radius: 15px;
+        border-radius: 12px;
         overflow: hidden;
+        border: none;
     }
 
     .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-6px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
     }
 
     .card-img-top {
@@ -20,98 +21,99 @@
     }
 
     .card:hover .card-img-top {
-        transform: scale(1.05);
+        transform: scale(1.03);
     }
 
     .btn-success,
     .btn-warning {
-        transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        transition: all 0.3s ease;
     }
 
     .btn-success:hover {
-        background-color: #28a745;
-        box-shadow: 0 0 15px rgba(40, 167, 69, 0.5);
+        background-color: #218838;
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
     }
 
     .btn-warning:hover {
-        background-color: #ffc107;
-        box-shadow: 0 0 15px rgba(255, 193, 7, 0.5);
+        background-color: #e0a800;
+        box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
     }
 
-    .text-truncate {
-        max-width: 100%;
-        display: inline-block;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+    .price-tag {
+        font-size: 1.2rem;
+        color: #28a745;
     }
 
-    .card-title,
-    .card-text,
-    .text-muted {
-        transition: color 0.3s ease;
+    .stock-badge {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.6rem;
+        background-color: #f8f9fa;
+        border-radius: 30px;
+    }
+
+    .seller-reputation {
+        font-size: 0.85rem;
+        color: #6c757d;
     }
 
     .card:hover .card-title {
-        color: #007bff;
-    }
-
-    .card:hover .text-muted {
-        color: #6c757d;
+        color: #0d6efd;
     }
 </style>
 @endpush
 
 @section('content')
-<div class="container mt-4">
-    <h1 class="mb-4">Welcome to the Online Public Market</h1>
+<div class="container py-4">
+    <h1 class="mb-4 fw-bold text-center text-danger">Welcome to the Online Public Market</h1>
 
     @if(session('success'))
-        <div class="alert alert-success" role="alert">
+        <div class="alert alert-success text-center">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="row">
+    <div class="row g-4">
         @forelse ($products as $product)
-            <div class="col-md-4 mb-4">
+            <div class="col-md-6 col-lg-4">
                 <div class="card h-100 shadow-sm">
                     @if ($product->picture)
                         <img src="{{ asset('storage/' . $product->picture) }}" 
                              class="card-img-top" 
                              alt="{{ $product->name }}" 
-                             style="height: 200px; object-fit: cover;">
+                             style="height: 220px; object-fit: cover;">
                     @else
                         <img src="{{ asset('images/no-image.png') }}" 
                              class="card-img-top" 
                              alt="No Image Available" 
-                             style="height: 200px; object-fit: cover;">
+                             style="height: 220px; object-fit: cover;">
                     @endif
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title text-truncate" title="{{ $product->name }}">{{ $product->name }}</h5>
-                        <p class="text-muted mb-2">
-                            Sold by: 
-                            <strong title="{{ $product->seller->name ?? 'Unknown Seller' }}">
-                                {{ $product->seller->name ?? 'Unknown Seller' }}
-                            </strong>
+                        <div class="d-flex justify-content-between align-items-start mb-1">
+                            <h5 class="card-title text-truncate mb-0" title="{{ $product->name }}">{{ $product->name }}</h5>
+                            <span class="badge bg-light text-dark stock-badge">{{ $product->stock > 0 ? $product->stock . ' in stock' : 'Out of stock' }}</span>
+                        </div>
+
+                        <p class="seller-reputation mb-1">
+                            Sold by: <strong>{{ $product->seller->name ?? 'Unknown Seller' }}</strong>
                         </p>
-                        <p class="card-text mb-4 fw-bold">₱{{ number_format($product->price, 2) }}</p>
+
+                        <p class="price-tag fw-bold mb-3">₱{{ number_format($product->price, 2) }}</p>
 
                         @auth
                             @if(auth()->user()->role === 'customer')
-                                <form method="POST" action="{{ route('order.place', $product->id) }}" class="mb-3" novalidate>
+                                <form method="POST" action="{{ route('order.place', $product->id) }}" class="mb-2 mt-auto" novalidate>
                                     @csrf
                                     <div class="input-group">
-                                        <input type="number" name="quantity" min="1" max="{{ $product->stock }}" required class="form-control" placeholder="Quantity" aria-label="Quantity">
-                                        <button type="submit" class="btn btn-success" aria-label="Order Now">Order Now</button>
+                                        <input type="number" name="quantity" min="1" max="{{ $product->stock }}" required class="form-control" placeholder="Qty" aria-label="Quantity">
+                                        <button type="submit" class="btn btn-success">Buy Now</button>
                                     </div>
                                 </form>
 
                                 <form action="{{ route('cart.add', $product->id) }}" method="POST" class="text-center">
                                     @csrf
-                                    <button type="submit" class="btn btn-warning btn-sm px-3" aria-label="Add to Cart">
-                                        <i class="bi bi-cart-plus me-1" aria-hidden="true"></i> Add to Cart
+                                    <button type="submit" class="btn btn-warning btn-sm w-100">
+                                        <i class="bi bi-cart-plus me-1"></i> Add to Cart
                                     </button>
                                 </form>
                             @endif
@@ -121,9 +123,7 @@
             </div>
         @empty
             <div class="col-12">
-                <div class="alert alert-info text-center" role="alert">
-                    No products available at the moment.
-                </div>
+                <div class="alert alert-info text-center">No products available at the moment.</div>
             </div>
         @endforelse
     </div>
