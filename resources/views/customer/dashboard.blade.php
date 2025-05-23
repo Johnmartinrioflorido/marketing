@@ -1,43 +1,32 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mb-4">
-    <a href="javascript:history.back()" class="btn btn-outline-secondary">
-        <i class="bi bi-arrow-left"></i> 
-    </a>
-</div>
-    <div class="container">
-        <h2>Welcome, {{ auth()->user()->name }}</h2>
+<div class="container mt-4">
 
-        <h3>Your Orders</h3>
-
-        @if ($orders->isEmpty())
-            <p>You have no orders yet.</p>
-        @else
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Order ID</th>
-                        <th>Product</th>
-                        <th>Status</th>
-                        <th>Total</th>
-                        <th>Delivery Status</th>
-                        <th>Delivery Person</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($orders as $order)
-                        <tr>
-                            <td>{{ $order->id }}</td>
-                            <td>{{ $order->product->name ?? 'Product deleted' }}</td>
-                            <td>{{ ucfirst($order->status) }}</td>
-                            <td>{{ number_format($order->total, 2) }}</td>
-                            <td>{{ ucfirst($order->delivery_status ?? 'Not set') }}</td>
-                            <td>{{ optional($order->deliveryPerson)->name ?? 'Not assigned' }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @endif
+    {{-- Back Button --}}
+    <div class="mb-3">
+        <a href="javascript:history.back()" class="btn btn-outline-secondary d-inline-flex align-items-center">
+            <i class="bi bi-arrow-left me-2"></i> Back
+        </a>
     </div>
-@endsection
+
+    {{-- Welcome Message --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title mb-0">Welcome, {{ auth()->user()->name }}</h2>
+            <p class="text-muted">Here's a summary of your orders.</p>
+        </div>
+    </div>
+
+    {{-- Orders Section --}}
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Your Orders</h5>
+        </div>
+        <div class="card-body">
+            @if ($orders->isEmpty())
+                <div class="alert alert-info mb-0" role="alert">
+                    You have no orders yet.
+                </div>
+            @else
+                <div class="
