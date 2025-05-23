@@ -4,7 +4,7 @@
 <div class="container mt-5">
 
     {{-- Back to Admin Dashboard --}}
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary mb-4">
+    <a href="{{ route('admin.d  ashboard') }}" class="btn btn-outline-secondary mb-4">
         ← 
         <i class="fas fa-arrow-left"></i> 
     </a>
@@ -33,24 +33,21 @@
             <tbody>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product->name }}</td>
-                        <td>{{ $product->description }}</td>
-                        <td>{{ $product->vendor->name ?? 'N/A' }}</td>
-                        <td>₱{{ number_format($product->price, 2) }}</td>
-                        <td>{{ $product->stock }}</td>
-                        <td>{{ $product->created_at ? $product->created_at->diffForHumans() : 'N/A' }}</td>
-                        <td>
-                            <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editProductModal{{ $product->id }}">
-                                <i class="fas fa-edit"></i> Edit
-                            </button>
-                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i> Delete
-                                </button>
-                            </form>
-                        </td>
+                   @foreach ($orders as $order)
+                    <tr>
+                    <td>#{{ $order->id }}</td>
+                    <td>{{ $order->user->name ?? 'N/A' }}</td>
+                    <td>{{ ucfirst($order->status) }}</td>
+                    <td>₱{{ number_format($order->total, 2) }}</td>
+                    <td>{{ $order->created_at->diffForHumans() }}</td>
+                    <td>
+            <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-sm btn-info">
+                <i class="fas fa-eye"></i> View
+            </a>
+        </td>
+    </tr>
+@endforeach
+
                     </tr>
 
                     {{-- Edit Product Modal --}}

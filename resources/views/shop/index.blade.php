@@ -114,7 +114,7 @@
                                     @csrf
                                     <button type="submit" class="btn btn-warning btn-sm w-100">
                                         <i class="bi bi-cart-plus me-1"></i> Add to Cart
-                                    </button>
+                                    </button>   
                                 </form>
                             @endif
                         @endauth

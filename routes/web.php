@@ -37,12 +37,31 @@ Route::post('/register', [RegisterController::class, 'register']);
 Route::get('/register/vendor', [RegisterController::class, 'showVendorRegisterForm'])->name('register.vendor');
 Route::post('/register/vendor', [RegisterController::class, 'registerVendor']);
 Route::post('/vendor/register', [VendorController::class, 'register'])->name('vendor.register.submit');
+//customer
+Route::middleware(['auth','role:customer'])->get('/customer/dashboard',[CustomerController::class, 'dashboard'])->name('cutomer.dahsboard');
+//view ng order
+// Admin routes for viewing and managing orders
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+
+    // Route to view orders list
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+
+    // Route to edit an order's details (Optional)
+    Route::get('/orders/{order}/edit', [OrderController::class, 'edit'])->name('orders.edit');
+    Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
+    Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+});
+
+    // routes/web.php
+Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
+Route::post('/checkout/single', [CheckoutController::class, 'checkoutSingle'])->name('checkout.single');
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/products/manage', [AdminController::class, 'manageProducts'])->name('products.manage');
     Route::get('/vendors', [AdminController::class, 'viewVendors'])->name('vendors');
+    Route::get('/admin/customers', [AdminController::class, 'viewCustomers'])->name('admin.customers');
     Route::resource('products', ProductController::class);
 });
 

@@ -6,8 +6,9 @@
 
 <div class="container mt-4">
 
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-secondary mb-3">
-        ← Back to Admin Dashboard
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-secondary mb-4">
+        ← 
+        <i class="fas fa-arrow-left"></i> 
     </a>
 
     <h2 class="mb-4" style="color: #dc3545; font-weight: 700;">Registered Vendors</h2>
